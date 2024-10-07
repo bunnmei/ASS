@@ -63,6 +63,8 @@ window.addEventListener("DOMContentLoaded", () => {
   setting = document.querySelector(".setting");
   
   setting?.addEventListener("click", () => {
+    console.log(window.innerWidth)
+    console.log(window.innerHeight)
     if (x && y && w && h) {
       setting_emit()
     }
