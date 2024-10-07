@@ -1,12 +1,6 @@
-use std::f32::consts::E;
-
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-use tauri::{window, Window};
-use tauri::{App, WindowBuilder, Manager};
-use tauri::Size;
-use tauri::PhysicalSize;
-use tauri::PhysicalPosition;
 
+use tauri::{utils::config::Position, window, Manager, PhysicalPosition, PhysicalSize, Size};
 mod screenshot;
 
 #[tauri::command]
@@ -28,58 +22,17 @@ async fn open_window(app: tauri::AppHandle)
 #[tauri::command]
 fn setting_emit(x: &str, y: &str, w: &str, h: &str, app: tauri::AppHandle) {
 
-    let mut x: i32 = x.parse().unwrap();
-    let mut y: i32 = y.parse().unwrap();
+    let x: i32 = x.parse().unwrap();
+    let y: i32 = y.parse().unwrap();
     let w: u32 = w.parse().unwrap();
     let h: u32 = h.parse().unwrap();
-
-    println!("{} - {} - {} - {}", x, y, w, h);
+    // println!("{} - {} - {} - {}", x, y, w, h);
     let other_window = app.get_window("label");
-    // screenshot::area_screenshot(x, y, w, h);
     match other_window {
         Some(window) => {
             println!("windowがみつかった");
-            println!("{:?}", window.outer_position());
-            println!("{:?}", window.inner_position());
-            let _ = window.hide();
-            
-            if let Ok(pos) = window.outer_position() {
-                if pos.x < 0 {
-                    x = 0;
-                } else {
-                    x = pos.x;
-                }
-                if pos.y < 0 {
-                    y = 0;
-                } else {
-                    y = pos.y
-                }
-            }
-
-            let sizedata = window
-                .inner_size()
-                .map(|size| tauri::PhysicalSize {
-                    width: size.width,
-                    height: size.height,
-                });
-            println!("{:?}", sizedata);
-            
-            match sizedata {
-                Ok(size) => {
-                    screenshot::area_screenshot(x, y, size.width + 2, size.height + 31);
-                    let _ = window.show();
-                },
-                Err(e) => {
-                    println!("{}", e);
-                }                
-            }
-        
-            
-            // let _ = window.set_position(PhysicalPosition {
-            //     x: x - 8,
-            //     y: y - 8,
-            // });
-
+            let _ = window.set_size(Size::Physical(PhysicalSize{ width:w, height: h}));  
+            let _ = window.set_position(PhysicalPosition{ x : x - 8, y: y - 8});        
         },
         None => {
             println!("windowが見つかりませんでした。");
@@ -88,32 +41,45 @@ fn setting_emit(x: &str, y: &str, w: &str, h: &str, app: tauri::AppHandle) {
 }
 
 #[tauri::command]
-fn emit_size(size: &str, app: tauri::AppHandle) {
+fn screen_shot(app: tauri::AppHandle) {
     // let data = window.inner_position();
     let other_window = app.get_window("label");
     match other_window {
         Some(window) => {
-            println!("windowがみつかった");
-            println!("{:?}", window.outer_position());
-            // let _ = window.set_size(Size::Physical(PhysicalSize {
-            // width: 800.0 as u32,
-            // height: 600.0 as u32,
-            // }));
+
+            if let Ok(pos) = window.outer_position() {
+                
+                let size = window.inner_size()
+                    .map(|size| tauri::PhysicalSize {
+                        width: size.width,
+                        height: size.height,
+                    });
+
+                match size {
+                    Ok(siz) => {
+                        let _ = window.hide();
+                        screenshot::area_screenshot(pos.x, pos.y, siz.width, siz.height);
+                        let _ = window.show();
+                    },
+                    Err(e) => {
+                        println!("window_size取得失敗 e{}", e);
+                    }
+                }
+                    
+            }
         },
         None => {
             println!("windowが見つかりませんでした。");
         }
     }
-    // screenshot::area_screenshot();
     println!("押されたよ2");
-    println!("{}", size);
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet, open_window, emit_size,setting_emit])
+        .invoke_handler(tauri::generate_handler![greet, open_window, screen_shot,setting_emit])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

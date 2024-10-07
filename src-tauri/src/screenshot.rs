@@ -14,6 +14,4 @@ pub fn area_screenshot(
       image
           .save(format!("target/{}-2.webp", screen.display_info.id))
           .unwrap();
-  // for screen in screens {
-  // }
 }

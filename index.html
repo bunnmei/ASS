@@ -6,28 +6,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tauri App</title>
     <style>
-      .open_btn {
-        width: 50px;
-        height: 50px;
-        background-color: aqua;
+      :root {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        padding: 0;
+        width: 500px;
+        height: 400px;
+        background-color: rgba(213, 213, 91, 0.476);
       }
       .text-area {
         display: flex;
-        flex-direction: column;
+        flex-direction: colum;
       }
-      .setting {
+      
+      .block {
+        flex: 1;
+        display: flex;
+      }
+
+      .input-area {
+        flex: 1;
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .input-area-item {
+        display: flex;
+      }
+
+      p {
+        margin-right: 15px;
         width: 50px;
-        height: 50px;
-        background-color: pink;
+      }
+      input {
+        height: 50%;
+        width: 80px;
+        padding: 10px;
+        margin-bottom: 5px;
+      }
+
+      .icon-box {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .icon {
+        /* flex: 1; */
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 112, 136, 0.315);
+      }
+
+      .icon:hover {
+        cursor: pointer;
+      }
+      svg {
+        height: 50%;
       }
     </style>
     <script type="module" src="/src/main.ts" defer></script>
   </head>
 
   <body>
+    <div class="container">
+
+      <div class="block">
+        <div class="input-area"></div>
+        <div class="input-area"></div>
+        <div class="icon-box">
+          <div class="icon open_win">
+            <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" viewBox="0 0 17 17" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: currentColor; --darkreader-inline-stroke: currentColor;"><g></g><path d="M0 1v15h17v-15h-17zM16 2v3h-15v-3h15zM1 15v-9h15v9h-15zM7 4h-1v-1h1v1zM5 4h-1v-1h1v1zM3 4h-1v-1h1v1z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="input-area">
+          <div class="input-area-item">
+            <p>x:</p>
+            <input type="number" id="x">
+          </div>
+          <div class="input-area-item">
+            <p>y:</p>
+            <input type="number" id="y">
+          </div>
+          
+        </div>
+        <div class="input-area">
+          <div class="input-area-item">
+            <p>width:</p>
+            <input type="number" id="w">
+          </div>
+          <div class="input-area-item">
+            <p>height:</p>
+            <input type="number" id="h">
+          </div>
+        </div>
+        <div class="icon-box setting">
+          <div class="icon">
+            <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" viewBox="0 0 17 17" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: currentColor; --darkreader-inline-stroke: currentColor;"><g></g><path d="M15 2v7.5h-1v-5.668l-9.334 9.334-0.707-0.707 9.459-9.459h-5.918v-1h7.5zM11 16h-10v-10h6.574v-1h-7.574v12h12v-7.714h-1v6.714z"></path></svg>
+        </div>
+
+</div>
+
+      </div>
+
+      <div class="block">
+        <div class="input-area"></div>
+        <div class="input-area"></div>
+        <div class="icon-box emit">
+          <div class="icon">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 32 32" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill: currentColor; --darkreader-inline-stroke: currentColor;"><path d="M 11.5 6 L 11.1875 6.40625 L 10 8 L 9 8 L 9 7 L 5 7 L 5 8 L 3 8 L 3 26 L 29 26 L 29 8 L 22 8 L 20.8125 6.40625 L 20.5 6 Z M 12.5 8 L 19.5 8 L 20.6875 9.59375 L 21 10 L 27 10 L 27 14 L 21.1875 14 C 20.144531 12.214844 18.207031 11 16 11 C 13.792969 11 11.855469 12.214844 10.8125 14 L 5 14 L 5 10 L 11 10 L 11.3125 9.59375 Z M 23 11 L 23 13 L 25 13 L 25 11 Z M 16 13 C 18.222656 13 20 14.777344 20 17 C 20 19.222656 18.222656 21 16 21 C 13.777344 21 12 19.222656 12 17 C 12 14.777344 13.777344 13 16 13 Z M 5 16 L 10.09375 16 C 10.039063 16.320313 10 16.664063 10 17 C 10 20.300781 12.699219 23 16 23 C 19.300781 23 22 20.300781 22 17 C 22 16.664063 21.960938 16.320313 21.90625 16 L 27 16 L 27 24 L 5 24 Z"></path></svg>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
     <!-- <div class="container">
       <h1>Welcome to Tauri!</h1>
-
+      
       <div class="row">
         <a href="https://vitejs.dev" target="_blank">
           <img src="/src/assets/vite.svg" class="logo vite" alt="Vite logo" />
@@ -57,7 +176,7 @@
 <!-- 
       <p id="greet-msg"></p>
     </div> -->
-    <div class="text-area">
+    <!-- <div class="text-area">
       x :<input type="text" id="x">
       y :<input type="text" id="y">
       width :<input type="text" id="w">
@@ -66,6 +185,6 @@
     <div class="setting"></div>
     <input type="text" id="window_size">
     <div class="emit">Emit</div>
-    <div class="open_btn"></div>
+    <div class="open_btn"></div> -->
   </body>
 </html>

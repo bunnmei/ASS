@@ -1,11 +1,10 @@
 import { invoke } from "@tauri-apps/api/core";
 
-let greetInputEl: HTMLInputElement | null;
-let greetMsgEl: HTMLElement | null;
+// let greetInputEl: HTMLInputElement | null;
+// let greetMsgEl: HTMLElement | null;
 
 let open_win: HTMLDivElement | null;
 
-let text: HTMLInputElement | null;
 let emit: HTMLElement | null;
 
 let x: HTMLInputElement | null;
@@ -29,11 +28,9 @@ async function open_window() {
   }
 }
 
-async function emit_size() {
-  if (emit && text) {
-    await invoke("emit_size", {
-      size: text.value
-    })
+async function screen_shot() {
+  if (emit) {
+    await invoke("screen_shot")
   }
 }
 
@@ -63,23 +60,21 @@ window.addEventListener("DOMContentLoaded", () => {
   setting = document.querySelector(".setting");
   
   setting?.addEventListener("click", () => {
-    console.log(window.innerWidth)
-    console.log(window.innerHeight)
-    if (x && y && w && h) {
+    if (x?.value && y?.value && w?.value && h?.value) {
       setting_emit()
     }
   })
 
-  open_win = document.querySelector(".open_btn")
+  open_win = document.querySelector(".open_win")
   open_win?.addEventListener("click", (e) => {
     e.preventDefault()
     open_window()
   })
-  text = document.querySelector("#window_size")
+
   emit = document.querySelector(".emit")
 
-  emit?.addEventListener("click", (e) => {
-    console.log(text)
-    emit_size()
+  emit?.addEventListener("click", () => {
+    // console.log("kamera")
+    screen_shot()
   })
 });

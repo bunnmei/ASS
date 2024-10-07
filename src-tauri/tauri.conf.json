@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0-rc",
-  "productName": "tauri_v2_test",
+  "productName": "ASS",
   "version": "0.1.0",
-  "identifier": "com.tauri_v2_test.app",
+  "identifier": "com.tauriv2test.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
