@@ -16,4 +16,5 @@ pub fn area_screenshot(x: i32, y: i32, width: u32, height: u32, path: &str) {
             .save(format!("{}/{}-2.webp", path, screen.display_info.id))
             .unwrap();
     }
+    
 }

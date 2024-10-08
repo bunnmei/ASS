@@ -1,7 +1,7 @@
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-use tauri::{utils::config::Position, window, Manager, PhysicalPosition, PhysicalSize, Size};
-use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
+use tauri::{Manager, PhysicalPosition, PhysicalSize, Size};
+use tauri_plugin_dialog::{DialogExt};
 mod screenshot;
 
 #[tauri::command]
@@ -80,17 +80,14 @@ fn screen_shot(path: &str, app: tauri::AppHandle) {
 #[tauri::command]
 fn open_filer(app: tauri::AppHandle) -> String {
     let folder_path = app.dialog().file().blocking_pick_folder();
-    let msg = 
     match folder_path {
         Some(path) => {
             format!("{}", path)
         },
         None => {
-            format!("folderが選択されていません。")
+            "folderが選択されていません。".to_string()
         }
-    };
-
-    msg
+    }
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

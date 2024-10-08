@@ -14,6 +14,7 @@ let h: HTMLInputElement | null;
 let setting: HTMLDivElement | null;
 
 let file: HTMLDivElement | null;
+let area_2: HTMLDivElement | null;
 
 // async function greet() {
 //   if (greetMsgEl && greetInputEl) {
@@ -31,9 +32,9 @@ async function open_window() {
 }
 
 async function screen_shot() {
-  if (emit && file && file.textContent !== "") {
+  if (emit && area_2 && area_2.textContent !== "") {
     await invoke("screen_shot", {
-      path: file.textContent
+      path: area_2.textContent
     })
   }
 }
@@ -50,8 +51,8 @@ async function setting_emit() {
 }
 
 async function open_filer() {
-  if (file) {
-    file.textContent = await invoke("open_filer");
+  if (file && area_2) {
+    area_2.textContent = await invoke("open_filer");
   }
 }
 
@@ -92,4 +93,6 @@ window.addEventListener("DOMContentLoaded", () => {
   file?.addEventListener("click", () => {
     open_filer();
   })
+
+  area_2 = document.querySelector(".input-area-2")
 });
