@@ -24,7 +24,7 @@ async fn open_window(app: tauri::AppHandle) {
 }
 
 #[tauri::command]
-fn setting_emit(x: &str, y: &str, w: &str, h: &str, app: tauri::AppHandle) {
+fn setting_emit(x: &str, y: &str, w: &str, h: &str,  app: tauri::AppHandle) {
     let x: i32 = x.parse().unwrap();
     let y: i32 = y.parse().unwrap();
     let w: u32 = w.parse().unwrap();
@@ -47,7 +47,7 @@ fn setting_emit(x: &str, y: &str, w: &str, h: &str, app: tauri::AppHandle) {
 }
 
 #[tauri::command]
-fn screen_shot(path: &str, app: tauri::AppHandle) {
+fn screen_shot(path: &str, pref: &str, format: &str, file_name: &str, app: tauri::AppHandle) {
     // let data = window.inner_position();
     let other_window = app.get_window("label");
     match other_window {
@@ -61,7 +61,7 @@ fn screen_shot(path: &str, app: tauri::AppHandle) {
                 match size {
                     Ok(siz) => {
                         let _ = window.hide();
-                        screenshot::area_screenshot(pos.x, pos.y, siz.width, siz.height, path);
+                        screenshot::area_screenshot(pos.x, pos.y, siz.width, siz.height, path, pref, format, file_name);
                         let _ = window.show();
                     }
                     Err(e) => {
