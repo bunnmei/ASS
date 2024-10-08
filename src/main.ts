@@ -13,6 +13,8 @@ let w: HTMLInputElement | null;
 let h: HTMLInputElement | null;
 let setting: HTMLDivElement | null;
 
+let file: HTMLDivElement | null;
+
 // async function greet() {
 //   if (greetMsgEl && greetInputEl) {
 //     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -29,8 +31,10 @@ async function open_window() {
 }
 
 async function screen_shot() {
-  if (emit) {
-    await invoke("screen_shot")
+  if (emit && file && file.textContent !== "") {
+    await invoke("screen_shot", {
+      path: file.textContent
+    })
   }
 }
 
@@ -42,6 +46,12 @@ async function setting_emit() {
       w: w.value,
       h: h.value,
     }) 
+  }
+}
+
+async function open_filer() {
+  if (file) {
+    file.textContent = await invoke("open_filer");
   }
 }
 
@@ -76,5 +86,10 @@ window.addEventListener("DOMContentLoaded", () => {
   emit?.addEventListener("click", () => {
     // console.log("kamera")
     screen_shot()
+  })
+
+  file = document.querySelector(".file")
+  file?.addEventListener("click", () => {
+    open_filer();
   })
 });

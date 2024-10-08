@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
-
-// @ts-expect-error process is a nodejs global
+import { resolve } from 'path';
 const host = process.env.TAURI_DEV_HOST;
+// @ts-expect-error process is a nodejs global
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
@@ -27,4 +27,13 @@ export default defineConfig(async () => ({
       ignored: ["**/src-tauri/**"],
     },
   },
+
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve( __dirname, 'index.html'),
+        windows: resolve( __dirname , "capture.html"),
+      }
+    }
+  }
 }));
